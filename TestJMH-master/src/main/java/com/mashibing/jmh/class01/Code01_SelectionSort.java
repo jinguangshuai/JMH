@@ -8,6 +8,7 @@ public class Code01_SelectionSort {
 		if (arr == null || arr.length < 2) {
 			return;
 		}
+		//测试提交
 		// 0～n-1
 		// 1～n-1
 		// 2～n-1
