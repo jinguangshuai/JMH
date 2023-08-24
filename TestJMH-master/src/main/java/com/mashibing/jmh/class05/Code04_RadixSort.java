@@ -25,8 +25,9 @@ public class Code04_RadixSort {
 		return res;
 	}
 
-	// arr[l..r]排序  ,  digit
+	// arr[l..r]排序  ,  digit 位数
 	public static void radixSort(int[] arr, int L, int R, int digit) {
+		//表示都是10进制的数字
 		final int radix = 10;
 		int i = 0, j = 0;
 		// 有多少个数准备多少个辅助空间
@@ -38,10 +39,14 @@ public class Code04_RadixSort {
 			// count[2] 当前位(d位)是(0、1和2)的数字有多少个
 			// count[i] 当前位(d位)是(0~i)的数字有多少个
 			int[] count = new int[radix]; // count[0..9]
+
+			//模拟进出桶的过程
 			for (i = L; i <= R; i++) {
+				// j代表每个数字个位上的数字
 				j = getDigit(arr[i], d);
 				count[j]++;
 			}
+			//形成新的count'
 			for (i = 1; i < radix; i++) {
 				count[i] = count[i] + count[i - 1];
 			}
@@ -50,12 +55,15 @@ public class Code04_RadixSort {
 				help[count[j] - 1] = arr[i];
 				count[j]--;
 			}
+			//模拟进出桶的过程
+
+
 			for (i = L, j = 0; i <= R; i++, j++) {
 				arr[i] = help[j];
 			}
 		}
 	}
-
+	//获取每个单位的对应的数字，例如个位对应的数字，十位对应的数字，百位对应的数字
 	public static int getDigit(int x, int d) {
 		return ((x / ((int) Math.pow(10, d - 1))) % 10);
 	}

@@ -229,7 +229,7 @@ public class Code01_TrieTree {
 			int count = 0;
 			for (String cur : box.keySet()) {
 				if (cur.startsWith(pre)) {
-					count++;
+					count++;  //hashmap本身就存在这个cur的没算上，真正正确应该是 count += box.get(cur)
 				}
 			}
 			return count;
@@ -278,6 +278,9 @@ public class Code01_TrieTree {
 					int ans1 = trie1.search(arr[j]);
 					int ans2 = trie2.search(arr[j]);
 					int ans3 = right.search(arr[j]);
+					System.out.println(ans1);
+					System.out.println(ans2);
+					System.out.println(ans3);
 					if (ans1 != ans2 || ans2 != ans3) {
 						System.out.println("Oops!");
 					}
@@ -285,6 +288,9 @@ public class Code01_TrieTree {
 					int ans1 = trie1.prefixNumber(arr[j]);
 					int ans2 = trie2.prefixNumber(arr[j]);
 					int ans3 = right.prefixNumber(arr[j]);
+					System.out.println(ans1);
+					System.out.println(ans2);
+					System.out.println(ans3);
 					if (ans1 != ans2 || ans2 != ans3) {
 						System.out.println("Oops!");
 					}

@@ -13,6 +13,9 @@ public class Code02_TrieTree {
 		public Node1() {
 			pass = 0;
 			end = 0;
+			//假设 0->a,1->b,2->c,..25->z
+			//nexts[i] == null   i方向的路不存在
+			//nexts[i] ！= null   i方向的路存在
 			nexts = new Node1[26];
 		}
 	}
@@ -33,11 +36,11 @@ public class Code02_TrieTree {
 			node.pass++;
 			int index = 0;
 			for (int i = 0; i < chs.length; i++) { // 从左往右遍历字符
-				index = chs[i] - 'a'; // 由字符，对应成走向哪条路
-				if (node.nexts[index] == null) {
-					node.nexts[index] = new Node1();
+				index = chs[i] - 'a'; // 由字符，对应成走向哪条路  路径
+				if (node.nexts[index] == null) {//如果当前节点不存在
+					node.nexts[index] = new Node1();//新建一个节点
 				}
-				node = node.nexts[index];
+				node = node.nexts[index];//跳到此节点上
 				node.pass++;
 			}
 			node.end++;
