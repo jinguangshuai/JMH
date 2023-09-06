@@ -1,12 +1,48 @@
 package com.mashibing.jmh.class10;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.*;
 
 // undirected graph only
 public class Code05_Prim {
+
+	public static class Edge {
+		public int weight;
+		public Node from;
+		public Node to;
+
+		public Edge(int weight, Node from, Node to) {
+			this.weight = weight;
+			this.from = from;
+			this.to = to;
+		}
+
+	}
+
+	public class Graph {
+		public HashMap<Integer, Node> nodes;
+		public HashSet<Edge> edges;
+
+		public Graph() {
+			nodes = new HashMap<>();
+			edges = new HashSet<>();
+		}
+	}
+
+	public class Node {
+		public int value;
+		public int in;
+		public int out;
+		public ArrayList<Node> nexts;
+		public ArrayList<Edge> edges;
+
+		public Node(int value) {
+			this.value = value;
+			in = 0;
+			out = 0;
+			nexts = new ArrayList<>();
+			edges = new ArrayList<>();
+		}
+	}
 
 	public static class EdgeComparator implements Comparator<Edge> {
 

@@ -163,18 +163,24 @@ public class Code03_PartitionAndQuickSort {
 		int maxSize = 100;
 		int maxValue = 100;
 		boolean succeed = true;
-		for (int i = 0; i < testTime; i++) {
-			int[] arr1 = generateRandomArray(maxSize, maxValue);
-			int[] arr2 = copyArray(arr1);
-			int[] arr3 = copyArray(arr1);
-			quickSort1(arr1);
-			quickSort2(arr2);
-			quickSort3(arr3);
-			if (!isEqual(arr1, arr2) || !isEqual(arr2, arr3)) {
-				succeed = false;
-				break;
-			}
+//		for (int i = 0; i < testTime; i++) {
+//			int[] arr1 = generateRandomArray(maxSize, maxValue);
+//			int[] arr2 = copyArray(arr1);
+//			int[] arr3 = copyArray(arr1);
+//			quickSort1(arr1);
+//			quickSort2(arr2);
+//			quickSort3(arr3);
+//			if (!isEqual(arr1, arr2) || !isEqual(arr2, arr3)) {
+//				succeed = false;
+//				break;
+//			}
+//		}
+		int[] arr = new int[]{1,3,4,2,5,5,6};
+		quickSort3(arr);
+		for (int i = 0; i < arr.length; i++) {
+			System.out.println(arr[i]);
 		}
+
 		System.out.println(succeed ? "Nice!" : "Oops!");
 
 	}

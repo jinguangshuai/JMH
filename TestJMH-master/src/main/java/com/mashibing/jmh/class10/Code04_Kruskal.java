@@ -111,7 +111,30 @@ public class Code04_Kruskal {
 			}
 		}
 	}
-	
+
+
+	public static class Edge {
+		public int weight;
+		public Node from;
+		public Node to;
+
+		public Edge(int weight, Node from, Node to) {
+			this.weight = weight;
+			this.from = from;
+			this.to = to;
+		}
+
+	}
+
+	public class Graph {
+		public HashMap<Integer, Node> nodes;
+		public HashSet<Edge> edges;
+
+		public Graph() {
+			nodes = new HashMap<>();
+			edges = new HashSet<>();
+		}
+	}
 
 	public static class EdgeComparator implements Comparator<Edge> {
 
