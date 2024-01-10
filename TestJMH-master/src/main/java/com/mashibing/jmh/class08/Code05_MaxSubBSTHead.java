@@ -71,9 +71,11 @@ public class Code05_MaxSubBSTHead {
 	}
 
 	public static Info process(Node head) {
+		//head节点为空
 		if (head == null) {
 			return null;
 		}
+		//head节点不为空
 		Info leftInfo = process(head.left);
 		Info rightInfo = process(head.right);
 		int min = head.value;
@@ -94,6 +96,8 @@ public class Code05_MaxSubBSTHead {
 				maxSubBSTSize = rightInfo.maxSubBSTSize;
 			}
 		}
+		//leftInfo!=null 左树整体为搜索二叉树，则左子树的头结点为入参head.left
+		//rightInfo!=null 右树整体为搜索二叉树，则右子树的头结点为入参head.right
 		if ((leftInfo == null ? true : (leftInfo.maxSubBSTHead == head.left && leftInfo.max < head.value))
 				&& (rightInfo == null ? true : (rightInfo.maxSubBSTHead == head.right && rightInfo.min > head.value))) {
 			maxSubBSTHead = head;

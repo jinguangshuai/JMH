@@ -60,14 +60,14 @@ public class Code04_SerializeAndReconstructTree {
 			while (!queue.isEmpty()) {
 				head = queue.poll();
 				if (head.left != null) {
-					ans.add(String.valueOf(head.left.value));
-					queue.add(head.left);
+					ans.add(String.valueOf(head.left.value)); //序列化
+					queue.add(head.left); //加入队列
 				} else {
 					ans.add(null);
 				}
 				if (head.right != null) {
-					ans.add(String.valueOf(head.right.value));
-					queue.add(head.right);
+					ans.add(String.valueOf(head.right.value));//序列化
+					queue.add(head.right);//加入队列
 				} else {
 					ans.add(null);
 				}

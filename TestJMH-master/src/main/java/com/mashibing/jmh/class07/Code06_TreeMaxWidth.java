@@ -22,10 +22,11 @@ public class Code06_TreeMaxWidth {
 		}
 		Queue<Node> queue = new LinkedList<>();
 		queue.add(head);
+		//key 在哪一层，value
 		HashMap<Node, Integer> levelMap = new HashMap<>();
 		levelMap.put(head, 1);
-		int curLevel = 1;
-		int curLevelNodes = 0;
+		int curLevel = 1;// 当前你在统计哪一层的宽度
+		int curLevelNodes = 0;//当前层的宽度是多少
 		int max = 0;
 		while (!queue.isEmpty()) {
 			Node cur = queue.poll();
@@ -97,12 +98,23 @@ public class Code06_TreeMaxWidth {
 	}
 
 	public static void main(String[] args) {
+		Node head = new Node(1);
+		head.left = new Node(2);
+		head.right = new Node(3);
+		head.left.left = new Node(4);
+		head.left.right = new Node(5);
+		head.right.left = new Node(6);
+		head.right.right = new Node(7);
+
+		System.out.println(maxWidthUseMap(head));
+
+
 		int maxLevel = 10;
 		int maxValue = 100;
 		int testTimes = 1000000;
 		for (int i = 0; i < testTimes; i++) {
-			Node head = generateRandomBST(maxLevel, maxValue);
-			if (maxWidthUseMap(head) != maxWidthNoMap(head)) {
+			Node head1 = generateRandomBST(maxLevel, maxValue);
+			if (maxWidthUseMap(head1) != maxWidthNoMap(head1)) {
 				System.out.println("Oops!");
 			}
 		}

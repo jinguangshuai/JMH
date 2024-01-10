@@ -20,6 +20,8 @@ public class Code06_IsCBT {
 		}
 		LinkedList<Node> queue = new LinkedList<>();
 		// 是否遇到过左右两个孩子不双全的节点
+		// leaf为false代表没有遇到过左右两个孩子不双全的节点，
+		// leaf为true为遇到过左右两个孩子不双全的节点，则以后都必须为true，否则不为完全二叉树
 		boolean leaf = false;
 		Node l = null;
 		Node r = null;
@@ -29,7 +31,8 @@ public class Code06_IsCBT {
 			l = head.left;
 			r = head.right;
 			if (
-			// 如果遇到了不双全的节点之后，又发现当前节点不是叶节点
+			// leaf && !(l == null && r == null)) 如果遇到了不双全的节点之后，又发现当前节点不是叶节点
+			//l == null && r != null 有右无左直接 false
 			(leaf && !(l == null && r == null)) || (l == null && r != null)) {
 				return false;
 			}

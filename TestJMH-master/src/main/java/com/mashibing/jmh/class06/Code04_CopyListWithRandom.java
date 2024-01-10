@@ -40,7 +40,7 @@ public class Code04_CopyListWithRandom {
 		Node next = null;
 		// copy node and link to every node
 		// 1 -> 2
-		// 1 -> 1' -> 2
+		// 1 -> 1' -> 2 -> 2'
 		while (cur != null) {
 			// cur 老
 			next = cur.next;

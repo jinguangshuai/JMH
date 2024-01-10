@@ -13,6 +13,7 @@ public class Code07_SuccessorNode {
 		}
 	}
 
+	//获取后继节点
 	public static Node getSuccessorNode(Node node) {
 		if (node == null) {
 			return node;
@@ -38,6 +39,35 @@ public class Code07_SuccessorNode {
 		}
 		return node;
 	}
+
+	//获取前继节点
+	public static Node getPreNode(Node node) {
+		if (node == null) {
+			return node;
+		}
+		if (node.left != null) {
+			return getRightMost(node.left);
+		} else { // 无左子树
+			Node parent = node.parent;
+			while (parent != null && parent.right != node) { // 当前节点是其父亲节点左孩子
+				node = parent;
+				parent = node.parent;
+			}
+			return parent;
+		}
+	}
+
+	public static Node getRightMost(Node node) {
+		if (node == null) {
+			return node;
+		}
+		while (node.right != null) {
+			node = node.right;
+		}
+		return node;
+	}
+
+
 
 	public static void main(String[] args) {
 		Node head = new Node(6);

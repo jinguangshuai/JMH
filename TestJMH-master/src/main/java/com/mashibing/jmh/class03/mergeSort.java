@@ -1,5 +1,7 @@
 package com.mashibing.jmh.class03;
 
+import org.w3c.dom.ranges.Range;
+
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,31 @@ import java.util.List;
  */
 public class mergeSort {
 
-    public void merge(int[] arr, int L, int M, int R) {
+
+    public static void main(String[] args) {
+        int[] arr = new int[]{2, 5, 3, 4, 8, 3};
+        process(arr, 0, arr.length - 1);
+//        mergeSort2(arr);
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i]);
+        }
+
+    }
+
+    public static void process(int[] arr, int L, int R) {
+        if (null == arr && arr.length < 2) {
+            return;
+        }
+        if (L == R) {
+            return;
+        }
+        int M = L + ((R - L) >> 1);
+        process(arr, L, M);
+        process(arr, M + 1, R);
+        merge(arr, L, M, R);
+    }
+
+    public static void merge(int[] arr, int L, int M, int R) {
         int[] help = new int[R - L + 1];
         int i = 0;
         int p1 = L;
@@ -20,40 +46,15 @@ public class mergeSort {
         while (p1 <= M && p2 <= R) {
             help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
         }
-        //p2越界
-        while (p1 <= M) {
+        while (p1<=M){
             help[i++] = arr[p1++];
         }
-        //p1越界
-        while (p2 <= R) {
-            help[i++] = arr[p2++];
-        }
-        //赋值
-        for (int j = 0; j < help.length; j++) {
-            arr[L + j] = help[j];
-        }
-    }
-
-
-    public void mergeSort(int[] arr, int L, int M, int R) {
-        int[] help = new int[R - L + 1];
-        int i = 0;
-        int p1 = L;
-        int p2 = M;
-        while (p1 <= M && p2 <= R) {
-            help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
-        }
-        while (p1 <= M) {
-            help[i++] = arr[p1++];
-        }
-        while (p2 <= R) {
+        while (p2<=R){
             help[i++] = arr[p2++];
         }
         for (int j = 0; j < help.length; j++) {
-            arr[L + j] = help[j];
+            arr[L+j] = help[j];
         }
-
     }
-
 
 }
