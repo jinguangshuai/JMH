@@ -33,7 +33,7 @@ public class Code06_IsCBT {
 			if (
 			// leaf && !(l == null && r == null)) 如果遇到了不双全的节点之后，又发现当前节点不是叶节点
 			//l == null && r != null 有右无左直接 false
-			(leaf && !(l == null && r == null)) || (l == null && r != null)) {
+			(leaf && (l != null && r != null)) || (l == null && r != null)) {
 				return false;
 			}
 			if (l != null) {
@@ -77,16 +77,20 @@ public class Code06_IsCBT {
 		int height = Math.max(leftInfo.height, rightInfo.height) + 1;
 		boolean isFull = leftInfo.isFull && rightInfo.isFull && leftInfo.height == rightInfo.height;
 		boolean isCBT = false;
+		//树为完全二叉树
 		if (isFull) {
 			isCBT = true;
 		} else {
 			if (leftInfo.isCBT && rightInfo.isCBT) {
-				if (leftInfo.isCBT && rightInfo.isFull && leftInfo.height == rightInfo.height + 1) {
+				//左子树有一个左叶子节点，左子树为完全二叉树，右子树为满二叉树。左子树高度比右子树高度大1
+				if (leftInfo.isCBT && rightInfo.isFull && leftInfo.height == (rightInfo.height + 1)) {
 					isCBT = true;
 				}
-				if (leftInfo.isFull && rightInfo.isFull && leftInfo.height == rightInfo.height + 1) {
+				//左子树有左叶子节点、右叶子节点，左子树为满二叉树，右子树为满二叉树。左子树高度比右子树高度大1
+				if (leftInfo.isFull && rightInfo.isFull && leftInfo.height == (rightInfo.height + 1)) {
 					isCBT = true;
 				}
+				//左子树有左叶子节点、右叶子节点，左子树为满二叉树，右子树有一个左叶子节点，右子树为满二叉树。左子树高度和右子树高度相同。
 				if (leftInfo.isFull && rightInfo.isCBT && leftInfo.height == rightInfo.height) {
 					isCBT = true;
 				}

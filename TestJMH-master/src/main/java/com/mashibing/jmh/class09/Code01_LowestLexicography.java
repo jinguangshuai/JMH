@@ -23,14 +23,21 @@ public class Code01_LowestLexicography {
 		return lowest;
 	}
 
+	//strs里存放所有的字符串
+	//use已经使用过的字符串的下标，在use里面登记，不需要在使用
+	//之前使用过的字符串，拼接成->path
+	//用all收集所有可能的拼接
 	public static void process(String[] strs, HashSet<Integer> use, String path, ArrayList<String> all) {
+		//所有字符串都使用过了
 		if (use.size() == strs.length) {
 			all.add(path);
 		} else {
+			//遍历str所有的
 			for (int i = 0; i < strs.length; i++) {
 				if (!use.contains(i)) {
 					use.add(i);
 					process(strs, use, path + strs[i], all);
+					//遍历完上一次之后需要将平行分支i删除，否则影响下一次平行分支的遍历
 					use.remove(i);
 				}
 			}

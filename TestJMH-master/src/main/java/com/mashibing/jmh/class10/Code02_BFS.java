@@ -18,6 +18,7 @@ public class Code02_BFS {
 		while (!queue.isEmpty()) {
 			Node cur = queue.poll();
 			System.out.println(cur.value);
+			//解决环问题
 			for (Node next : cur.nexts) {
 				if (!set.contains(next)) {
 					set.add(next);

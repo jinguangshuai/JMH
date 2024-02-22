@@ -5,6 +5,7 @@ import java.util.Stack;
 
 public class Code02_DFS {
 
+	// 从node出发，进行深度优先遍历
 	public static void dfs(Node node) {
 		if (node == null) {
 			return;
@@ -13,6 +14,7 @@ public class Code02_DFS {
 		HashSet<Node> set = new HashSet<>();
 		stack.add(node);
 		set.add(node);
+		//处理逻辑
 		System.out.println(node.value);
 		while (!stack.isEmpty()) {
 			Node cur = stack.pop();

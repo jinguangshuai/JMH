@@ -22,11 +22,11 @@ public class Code06_TreeMaxWidth {
 		}
 		Queue<Node> queue = new LinkedList<>();
 		queue.add(head);
-		//key 在哪一层，value
+		//key 节点  value 该节点在哪一层
 		HashMap<Node, Integer> levelMap = new HashMap<>();
 		levelMap.put(head, 1);
-		int curLevel = 1;// 当前你在统计哪一层的宽度
-		int curLevelNodes = 0;//当前层的宽度是多少
+		int curLevel = 1;// 当前层数
+		int curLevelNodes = 0;//当前层数的数量 宽度
 		int max = 0;
 		while (!queue.isEmpty()) {
 			Node cur = queue.poll();
