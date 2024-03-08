@@ -6,7 +6,7 @@ package com.mashibing.jmh.class11;
  * @Description:com.mashibing.jmh.class11
  * @version:1.0
  */
-public class NTest01 {
+public class HanoiTest01 {
 
     public static void fun(int n) {
         if (n > 0) {

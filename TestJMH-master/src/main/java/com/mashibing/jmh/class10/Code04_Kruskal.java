@@ -41,18 +41,6 @@ public class Code04_Kruskal {
 		}
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
 	// Union-Find Set
 	public static class UnionFind {
 		// key 某一个节点， value key节点往上的节点

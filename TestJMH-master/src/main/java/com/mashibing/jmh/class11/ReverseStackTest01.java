@@ -10,21 +10,22 @@ import java.util.Stack;
  */
 public class ReverseStackTest01 {
 
+    //翻转栈中元素逆序重新压入
     public static void reverse(Stack<Integer> stack) {
         if (stack.isEmpty()) {
             return;
-        } else {
-            int i = getStack(stack);
-            reverse(stack);
-            stack.push(i);
         }
+        int i = getStack(stack);
+        reverse(stack);
+        stack.push(i);
+
     }
 
     //每次获取栈最底层的元素，并将其他元素原顺序放入栈
     public static int getStack(Stack<Integer> stack) {
         Integer result = stack.pop();
-        if (stack.size() == 1) {
-            return stack.pop();
+        if (stack.isEmpty()) {
+            return result;
         } else {
             int last = getStack(stack);
             stack.push(result);
@@ -41,7 +42,6 @@ public class ReverseStackTest01 {
 
         while (!stack.isEmpty()){
             System.out.println(stack.pop());
-
         }
 
     }

@@ -14,11 +14,18 @@ public class Code02_PrintAllSubsquences {
 		return ans;
 	}
 
+	//str固定字符串，不变
+	//index此时来到的位置，要 or 不要
+	//如果index来到了str的终止位置，把沿途路径生成的答案放到ans中
+	//之前做出的选择，就是path
 	public static void process1(char[] str, int index, List<String> ans, String path) {
 		if (index == str.length) {
 			ans.add(path);
 			return;
 		}
+//		process1(str, index + 1, ans, path);
+//		process1(str, index + 1, ans, path + String.valueOf(str[index]));
+
 		String no = path;
 		process1(str, index + 1, ans, no);
 		String yes = path + String.valueOf(str[index]);
@@ -49,7 +56,7 @@ public class Code02_PrintAllSubsquences {
 	}
 
 	public static void main(String[] args) {
-		String test = "aacc";
+		String test = "abc";
 		List<String> ans1 = subs(test);
 		List<String> ans2 = subsNoRepeat(test);
 
