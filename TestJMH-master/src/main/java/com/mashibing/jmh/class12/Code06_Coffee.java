@@ -93,6 +93,11 @@ public class Code06_Coffee {
 	}
 
 	// 方法二，洗咖啡杯的方式和原来一样，只是这个暴力版本减少了一个可变参数
+	// a 洗一杯的时间
+	// b 挥发一杯的时间
+	// drink 每一个员工喝完的时间 固定变量
+	// drink[0...index-1]都已经洗好，不用操心
+	// drink[index,...]都想变感觉，washLine 表示洗的机器何时可用
 	public static int process(int[] drinks, int a, int b, int index, int washLine) {
 		if (index == drinks.length - 1) {
 			return Math.min(Math.max(washLine, drinks[index]) + a, drinks[index] + b);

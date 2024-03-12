@@ -55,7 +55,7 @@ public class Code09_CoinsWay {
 		// 有面值的时候
 		int ways = 0;
 		for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
-			ways += process(arr, index + 1, rest - zhang * arr[index]);
+			ways += process2(arr, index + 1, rest - zhang * arr[index],dp);
 		}
 		dp[index][rest] = ways;
 		return dp[index][rest];
@@ -93,7 +93,7 @@ public class Code09_CoinsWay {
 			for (int rest = 0; rest <= aim; rest++) {
 			    //process2(int[] arr, int index, int rest,int[][] dp)
 				//for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
-                //	ways += process(arr, index + 1, rest - zhang * arr[index]);
+                //	ways += process(arr, ], rest - zhang * arr[index]);
                 //}
 				dp[i][rest] = dp[i + 1][rest];
 				//去除枚举剩余变量 如果i=10 rest=100,arr[10]=3
