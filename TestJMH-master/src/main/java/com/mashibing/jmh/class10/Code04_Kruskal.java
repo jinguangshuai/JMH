@@ -12,7 +12,7 @@ import java.util.Stack;
 
 //undirected graph only
 public class Code04_Kruskal {
-	
+
 	public static class MySets{
 		public HashMap<Node, List<Node>>  setMap;
 		public MySets(List<Node> nodes) {
@@ -22,15 +22,15 @@ public class Code04_Kruskal {
 				setMap.put(cur, set);
 			}
 		}
-		
-		
+
+
 		public boolean isSameSet(Node from, Node to) {
 			List<Node> fromSet  = setMap.get(from);
 			List<Node> toSet = setMap.get(to);
 			return fromSet == toSet;
 		}
-		
-		
+
+
 		public void union(Node from, Node to) {
 			List<Node> fromSet  = setMap.get(from);
 			List<Node> toSet = setMap.get(to);
@@ -40,19 +40,7 @@ public class Code04_Kruskal {
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	// Union-Find Set
 	public static class UnionFind {
 		// key 某一个节点， value key节点往上的节点
@@ -64,7 +52,8 @@ public class Code04_Kruskal {
 			fatherMap = new HashMap<Node, Node>();
 			sizeMap = new HashMap<Node, Integer>();
 		}
-		
+
+		//初始化所有的集合
 		public void makeSets(Collection<Node> nodes) {
 			fatherMap.clear();
 			sizeMap.clear();
@@ -147,11 +136,14 @@ public class Code04_Kruskal {
 
 	public static Set<Edge> kruskalMST(Graph graph) {
 		UnionFind unionFind = new UnionFind();
+		//初始化所有的点位
 		unionFind.makeSets(graph.nodes.values());
+		//权值进行堆排序，组合成小根堆
 		PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
 		for (Edge edge : graph.edges) { // M 条边
 			priorityQueue.add(edge);  // O(logM)
 		}
+		//set用以过滤已经使用过的边
 		Set<Edge> result = new HashSet<>();
 		while (!priorityQueue.isEmpty()) { // M 条边
 			Edge edge = priorityQueue.poll(); // O(logM)

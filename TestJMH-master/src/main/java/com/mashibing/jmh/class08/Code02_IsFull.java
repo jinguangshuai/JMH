@@ -40,6 +40,7 @@ public class Code02_IsFull {
 			return true;
 		}
 		Info all = process(head);
+		//1<<all.height 表示2的n次方
 		return (1 << all.height) - 1 == all.nodes;
 	}
 
@@ -59,7 +60,9 @@ public class Code02_IsFull {
 		}
 		Info leftInfo = process(head.left);
 		Info rightInfo = process(head.right);
+		//选择左子树和右子树最大的子树的高度
 		int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+		//左子树和右子树的高度再加上头结点高度等于总的大小
 		int nodes = leftInfo.nodes + rightInfo.nodes + 1;
 		return new Info(height, nodes);
 	}

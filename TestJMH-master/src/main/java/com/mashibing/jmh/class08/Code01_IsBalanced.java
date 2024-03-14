@@ -51,6 +51,8 @@ public class Code01_IsBalanced {
 		}
 		Info leftInfo = process2(head.left);
 		Info rightInfo = process2(head.right);
+
+		//当前子树的最大高度在加上头结点的高度
 		int height = Math.max(leftInfo.height, rightInfo.height) + 1;
 		boolean isBalanced = true;
 		if (!leftInfo.isBalaced || !rightInfo.isBalaced || Math.abs(leftInfo.height - rightInfo.height) > 1) {

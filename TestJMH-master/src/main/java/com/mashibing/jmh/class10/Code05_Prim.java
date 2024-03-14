@@ -55,25 +55,38 @@ public class Code05_Prim {
 
 	public static Set<Edge> primMST(Graph graph) {
 		// 解锁的边进入小根堆
-		PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(
-				new EdgeComparator());
-		HashSet<Node> set = new HashSet<>();
-		Set<Edge> result = new HashSet<>(); // 依次挑选的的边在result里
+		PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
+		//解锁的点放到set里面
+		HashSet<Node> nodeSet = new HashSet<>();
+		//已经考虑过的边不要重复考虑
+		HashSet<Edge> edgeSet = new HashSet<>();
+		//依次挑选的的边在result里
+		Set<Edge> result = new HashSet<>();
+		//防止出现多个图，组成森林，导致剩余的图无法遍历
 		for (Node node : graph.nodes.values()) { // 随便挑了一个点
 			// node 是开始点
-			if (!set.contains(node)) {
-				set.add(node);
+			if (!nodeSet.contains(node)) {
+				//第一个点位出发点，放到set里面
+				nodeSet.add(node);
 				for (Edge edge : node.edges) { // 由一个点，解锁所有相连的边
-					priorityQueue.add(edge);
+					//已经考虑过的边不重复考虑
+					if(!edgeSet.contains(edge)){
+						edgeSet.add(edge);
+						priorityQueue.add(edge);
+					}
 				}
 				while (!priorityQueue.isEmpty()) {
 					Edge edge = priorityQueue.poll(); // 弹出解锁的边中，最小的边
 					Node toNode = edge.to; // 可能的一个新的点
-					if (!set.contains(toNode)) { // 不含有的时候，就是新的点
-						set.add(toNode);
+					if (!nodeSet.contains(toNode)) { // 不含有的时候，就是新的点
+						nodeSet.add(toNode);
 						result.add(edge);
+						//再由新的点解锁所有新的边
 						for (Edge nextEdge : toNode.edges) {
-							priorityQueue.add(nextEdge);
+							if(!edgeSet.contains(nextEdge)){
+								edgeSet.add(nextEdge);
+								priorityQueue.add(nextEdge);
+							}
 						}
 					}
 				}

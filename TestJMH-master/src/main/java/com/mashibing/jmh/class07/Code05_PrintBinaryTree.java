@@ -18,6 +18,13 @@ public class Code05_PrintBinaryTree {
 		System.out.println();
 	}
 
+	/**
+	 *
+	 * @param head 需要打印的节点
+	 * @param height 打印节点的位置
+	 * @param to
+	 * @param len 需要打印节点的长度，不管节点多长都按照17位处理
+	 */
 	public static void printInOrder(Node head, int height, String to, int len) {
 		if (head == null) {
 			return;

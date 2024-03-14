@@ -8,17 +8,19 @@ import java.util.Map.Entry;
 public class Code06_Dijkstra {
 
 	public static HashMap<Node, Integer> dijkstra1(Node head) {
-		// 从head出发到所有点的最小距离
+		// 从head出发到所有点的最小距离  head为任意选择的一个点
 		// key : 从head出发到达key
 		// value : 从head出发到达key的最小距离
 		// 如果在表中，没有T的记录，含义是从head出发到T这个点的距离为正无穷
 		HashMap<Node, Integer> distanceMap = new HashMap<>();
 		distanceMap.put(head, 0);
-		// 已经求过距离的节点，存在selectedNodes中，以后再也不碰
+		// 已经求过距离的节点，存在selectedNodes中，以后再也不碰  锁这个点以后不用
 		HashSet<Node> selectedNodes = new HashSet<>();
 		Node minNode = getMinDistanceAndUnselectedNode(distanceMap, selectedNodes);
 		while (minNode != null) {
 			int distance = distanceMap.get(minNode);
+
+			//当前点所有的边的集合进行遍历，获取对应边的点集合
 			for (Edge edge : minNode.edges) {
 				Node toNode = edge.to;
 				if (!distanceMap.containsKey(toNode)) {
@@ -27,12 +29,16 @@ public class Code06_Dijkstra {
 					distanceMap.put(edge.to, Math.min(distanceMap.get(toNode), distance + edge.weight));
 				}
 			}
+
+			//集合加入最小的点，将此点锁住，以后不用这个点
 			selectedNodes.add(minNode);
+			//selectedNodes未被选择的点   获取最小的点
 			minNode = getMinDistanceAndUnselectedNode(distanceMap, selectedNodes);
 		}
 		return distanceMap;
 	}
 
+	//从未被选中的点选择最短的距离
 	public static Node getMinDistanceAndUnselectedNode(HashMap<Node, Integer> distanceMap, HashSet<Node> touchedNodes) {
 		Node minNode = null;
 		int minDistance = Integer.MAX_VALUE;
@@ -59,7 +65,7 @@ public class Code06_Dijkstra {
 
 	public static class NodeHeap {
 		private Node[] nodes; // 实际的堆结构
-		// key 某一个node， value 上面数组中的位置
+		// key 某一个node， value 上面数组中的位置，如果为-1则表示此节点已不在这个堆上
 		private HashMap<Node, Integer> heapIndexMap;
 		// key 某一个节点， value 从源节点出发到该节点的目前最小距离
 		private HashMap<Node, Integer> distanceMap;
@@ -79,10 +85,12 @@ public class Code06_Dijkstra {
 		// 有一个点叫node，现在发现了一个从源节点出发到达node的距离为distance
 		// 判断要不要更新，如果需要的话，就更新
 		public void addOrUpdateOrIgnore(Node node, int distance) {
+			//如果node在堆上
 			if (inHeap(node)) {
 				distanceMap.put(node, Math.min(distanceMap.get(node), distance));
 				insertHeapify(node, heapIndexMap.get(node));
 			}
+			//如果node不在堆上
 			if (!isEntered(node)) {
 				nodes[size] = node;
 				heapIndexMap.put(node, size);
@@ -125,10 +133,12 @@ public class Code06_Dijkstra {
 			}
 		}
 
+		//判断次节点是否在堆中存在过
 		private boolean isEntered(Node node) {
 			return heapIndexMap.containsKey(node);
 		}
 
+		//判断此节点是否还在堆上且存在数组中
 		private boolean inHeap(Node node) {
 			return isEntered(node) && heapIndexMap.get(node) != -1;
 		}

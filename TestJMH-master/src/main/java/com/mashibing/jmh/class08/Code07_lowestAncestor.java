@@ -20,10 +20,15 @@ public class Code07_lowestAncestor {
 		if (head == null) {
 			return null;
 		}
+		//key的父节点就是value
 		HashMap<Node, Node> parentMap = new HashMap<>();
 		parentMap.put(head, null);
+
+		//填充所有节点的父节点
 		fillParentMap(head, parentMap);
+
 		HashSet<Node> o1Set = new HashSet<>();
+		//将o1所有的节点的父节点填充到set
 		Node cur = o1;
 		o1Set.add(cur);
 		while (parentMap.get(cur) != null) {
@@ -31,6 +36,7 @@ public class Code07_lowestAncestor {
 			o1Set.add(cur);
 		}
 		cur = o2;
+		//遍历o2节点的父节点，看那个节点包含相同的父节点
 		while (!o1Set.contains(cur)) {
 			cur = parentMap.get(cur);
 		}
@@ -52,6 +58,7 @@ public class Code07_lowestAncestor {
 		return process(head, o1, o2).ans;
 	}
 
+	//任何子树，o1和o2最初的交互点，在这颗子树上是否有o1和o2
 	public static class Info {
 		public Node ans;
 		public boolean findO1;
@@ -70,17 +77,21 @@ public class Code07_lowestAncestor {
 		}
 		Info leftInfo = process(head.left, o1, o2);
 		Info rightInfo = process(head.right, o1, o2);
-
+		//判断左子树右子树上是否包含o1和o2
 		boolean findO1 = head == o1 || leftInfo.findO1 || rightInfo.findO1;
 		boolean findO2 = head == o2 || leftInfo.findO2 || rightInfo.findO2;
+		//获取o1和o2最初的交汇点
 		Node ans = null;
+		//左子树发现交汇点，则最低祖先为左子树的ans
 		if (leftInfo.ans != null) {
 			ans = leftInfo.ans;
 		}
+		//右子树发现交汇点，则最低祖先为右子树的ans
 		if (rightInfo.ans != null) {
 			ans = rightInfo.ans;
 		}
 		if (ans == null) {
+			//如果左子树右子树都没有交汇点并且该二叉树存在o1和o2，那交汇点为头结点
 			if (findO1 && findO2) {
 				ans = head;
 			}

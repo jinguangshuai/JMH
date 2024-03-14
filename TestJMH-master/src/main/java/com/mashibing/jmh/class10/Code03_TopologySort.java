@@ -13,8 +13,10 @@ public class Code03_TopologySort {
 		// key：某一个node
 		// value：剩余的入度
 		HashMap<Node, Integer> inMap = new HashMap<>();
-		// 入度为0的点，才能进这个队列
+		// 剩余入度为0的点，才能进这个队列
 		Queue<Node> zeroInQueue = new LinkedList<>();
+
+		//每个点的原始入度点，将这些点放入队列里面
 		for (Node node : graph.nodes.values()) {
 			inMap.put(node, node.in);
 			if (node.in == 0) {
@@ -23,10 +25,13 @@ public class Code03_TopologySort {
 		}
 		// 拓扑排序的结果，依次加入result
 		List<Node> result = new ArrayList<>();
+
+
 		while (!zeroInQueue.isEmpty()) {
 			Node cur = zeroInQueue.poll();
 			result.add(cur);
 			for (Node next : cur.nexts) {
+				//消除入度，所有邻居的入度都减去1
 				inMap.put(next, inMap.get(next) - 1);
 				if (inMap.get(next) == 0) {
 					zeroInQueue.add(next);
