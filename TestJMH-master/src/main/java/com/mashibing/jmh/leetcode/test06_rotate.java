@@ -8,6 +8,10 @@ import java.util.Random;
  * @Description:com.mashibing.jmh.leetcode
  * @version:1.0
  */
+
+/**
+ * * 给定一个整数数组 nums，将数组中的元素向右轮转 k 个位置，其中 k 是非负数。
+ */
 public class test06_rotate {
 
     //不占用额外的空间，但是太慢
@@ -37,8 +41,6 @@ public class test06_rotate {
         if (k % m != 0) {
             int n = k % m;
             int count = 0;
-
-            other:
             for (int i = 0; i < m & count < m; i++) {
                 //开始0位置
                 int current = i;
