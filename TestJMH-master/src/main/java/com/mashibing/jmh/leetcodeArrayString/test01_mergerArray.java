@@ -1,4 +1,4 @@
-package com.mashibing.jmh.leetcode;
+package com.mashibing.jmh.leetcodeArrayString;
 
 /**
  * @Auther：jinguangshuai
@@ -13,6 +13,7 @@ package com.mashibing.jmh.leetcode;
  * 请你 合并 nums2 到 nums1 中，使合并后的数组同样按 非递减顺序 排列。
  */
 public class test01_mergerArray {
+    //正向合并遍历
     public static int[] merge(int[] nums1, int m, int[] nums2, int n) {
         int a = m - 1, b = n - 1, c = m + n - 1;
         while (a >= 0 && b >= 0) {
@@ -27,7 +28,7 @@ public class test01_mergerArray {
         return nums1;
     }
 
-
+    //反向合并遍历
     public static int[] merge2(int[] nums1, int m, int[] nums2, int n) {
         int a = 0, b = 0;
         int c = 0;

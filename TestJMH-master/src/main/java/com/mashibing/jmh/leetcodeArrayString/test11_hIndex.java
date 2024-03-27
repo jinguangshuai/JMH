@@ -1,4 +1,4 @@
-package com.mashibing.jmh.leetcode;
+package com.mashibing.jmh.leetcodeArrayString;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package com.mashibing.jmh.leetcode;
+package com.mashibing.jmh.leetcodeArrayString;
 
 /**
  * @Auther：jinguangshuai
@@ -35,6 +35,7 @@ public class test02_removeElement {
 
     }
 
+    //单指针法
     public static int removeElement2(int[] nums, int val) {
         int left = 0;
         int n = nums.length;

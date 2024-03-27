@@ -1,4 +1,4 @@
-package com.mashibing.jmh.leetcode;
+package com.mashibing.jmh.leetcodeArrayString;
 
 import java.util.HashMap;
 
@@ -59,7 +59,7 @@ public class test05_majorityElement {
         return result;
     }
 
-
+    //同归于尽法   摩尔投票法
     public static int majorityElement3(int[] nums) {
         if(nums.length == 1){
             return nums[0];

@@ -1,6 +1,4 @@
-package com.mashibing.jmh.leetcode;
-
-import java.util.Random;
+package com.mashibing.jmh.leetcodeArrayString;
 
 /**
  * @Auther：jinguangshuai

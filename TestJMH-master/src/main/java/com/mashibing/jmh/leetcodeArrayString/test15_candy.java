@@ -1,4 +1,4 @@
-package com.mashibing.jmh.leetcode;
+package com.mashibing.jmh.leetcodeArrayString;
 
 /**
  * @Auther：jinguangshuai
@@ -8,6 +8,7 @@ package com.mashibing.jmh.leetcode;
  */
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * n 个孩子站成一排。给你一个整数数组 ratings 表示每个孩子的评分。
@@ -89,18 +90,18 @@ public class test15_candy {
         //pre用于记录前一个同学分得的糖果数量
         int inc = 1, dec = 0, pre = 1;
         for (int i = 1; i < n; i++) {
-            if(ratings[i] >= ratings[i-1]){
+            if (ratings[i] >= ratings[i - 1]) {
                 //处于递增序列中
                 dec = 0;    //递减序列长度在递增序列中始终为0
                 //当前同学和上一个同学分数相等时，直接分配1个就行，这样满足最小
-                pre = ratings[i] == ratings[i- 1] ? 1 : pre+1;
+                pre = ratings[i] == ratings[i - 1] ? 1 : pre + 1;
                 ret += pre;
                 inc = pre;//inc用于记录上一个递增序列的长度
 
-            }else {
+            } else {
                 //处于递减序列中
                 dec++;
-                if(dec == inc){
+                if (dec == inc) {
                     //当递减序列长度和递增序列长度相等时，把递增序列的最后一个同学分配到递减序列中
                     dec++;
                 }
@@ -112,10 +113,54 @@ public class test15_candy {
 
     }
 
+    public static int candy4(int[] ratings) {
+        int result = 0;
+        int n = ratings.length;
+
+        int[] left = new int[n];
+        left[0] = 1;
+        for (int i = 1; i < n; i++) {
+            if (ratings[i] > ratings[i - 1]) {
+                left[i] = left[i - 1] + 1;
+            }else {
+                left[i] = 1;
+            }
+        }
+        int[] right = new int[n];
+        right[n - 1] = 1;
+        for (int i = n - 2; i >= 0; i--) {
+            if (ratings[i] > ratings[i + 1]) {
+                right[i] = right[i + 1] + 1;
+            }else {
+                right[i] = 1;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            result += Math.max(left[i], right[i]);
+        }
+        return result;
+
+    }
+
+    public static int[] generate(int maxSize,int maxValue){
+        maxSize = new Random().nextInt(maxSize);
+        int[] arr = new int[maxSize+1];
+        for (int i = 0; i < maxSize+1; i++) {
+            arr[i] = new Random().nextInt(maxValue);
+        }
+        return arr;
+    }
+
 
     public static void main(String[] args) {
         int[] ratings = {3, 2, 1, 1, 4, 3, 3};
-        System.out.println(candy(ratings));
+
+        for (int i = 0; i < 10; i++) {
+            int[] generate = generate(10, 10);
+            System.out.println(candy3(generate));
+            System.out.println(candy4(generate));
+        }
+
     }
 
 }
