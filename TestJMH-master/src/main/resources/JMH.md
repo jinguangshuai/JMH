@@ -79,7 +79,7 @@
    	}
    
    	static void parallel() {
-   		nums.parallelStream().forEach(PS::isPrime);
+   		nums.parallelStream().forEach(com.jgs.jmh.PS::isPrime);
    	}
    	
    	static boolean isPrime(int num) {
@@ -98,7 +98,7 @@
    > ```java
    > package com.mashibing.jmh;
    > 
-   > import org.openjdk.jmh.annotations.Benchmark;
+import com.jgs.jmh.PS;    > import org.openjdk.jmh.annotations.Benchmark;
    > 
    > import static org.junit.jupiter.api.Assertions.*;
    > 
