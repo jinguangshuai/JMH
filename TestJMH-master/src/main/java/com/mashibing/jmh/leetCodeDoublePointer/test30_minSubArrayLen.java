@@ -126,6 +126,9 @@ public class test30_minSubArrayLen {
         System.out.println(minSubArrayLen3(7, nums));
         System.out.println(minSubArrayLen4(7, nums));
 
+
+
+
 //        int[] numss = {0,2,5,6,8,12,15};
 //        System.out.println(getIndexFromArray(numss, 7));
     }
