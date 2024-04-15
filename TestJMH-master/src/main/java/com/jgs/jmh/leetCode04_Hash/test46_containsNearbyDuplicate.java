@@ -8,6 +8,7 @@ package com.jgs.jmh.leetCode04_Hash;
  */
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * 给你一个整数数组 nums 和一个整数 k ，判断数组中是否存在两个 不同的索引 i 和 j ，
@@ -15,6 +16,7 @@ import java.util.HashMap;
  */
 public class test46_containsNearbyDuplicate {
 
+    //hash表
     public static boolean containsNearbyDuplicate(int[] nums, int k) {
         int m = nums.length;
         HashMap<Integer, Integer> map = new HashMap<>();
@@ -28,6 +30,21 @@ public class test46_containsNearbyDuplicate {
                 }
             } else {
                 map.put(nums[i], i);
+            }
+        }
+        return false;
+    }
+
+    //滑动窗口
+    public static boolean containsNearbyDuplicate1(int[] nums, int k) {
+        int m = nums.length;
+        HashSet<Integer> set = new HashSet<>();
+        for(int i = 0; i < m ; i++){
+            if(i > k){
+                set.remove(nums[i-k-1]);
+            }
+            if(!set.add(nums[i])){
+                return true;
             }
         }
         return false;
