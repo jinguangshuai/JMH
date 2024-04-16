@@ -7,6 +7,9 @@ package com.jgs.jmh.leetCode06_stack;
  * @version:1.0
  */
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -16,99 +19,116 @@ import java.util.Stack;
  */
 public class test56_calculate {
 
+    //nums ： 存放所有的数字
+    //ops ：存放所有的数字以外的操作，+/- 也看做是一种操作
+    //适用于加减法
     public static int calculate(String s) {
-        //去除空格
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            if (' ' != s.charAt(i)) {
-                sb.append(s.charAt(i));
-            }
-        }
-        char[] chars = sb.toString().toCharArray();
-        int m = chars.length;
+        // 存放所有的数字
         Stack<Integer> digit = new Stack<>();
+        // 为了防止第一个数为负数，先往 nums 加个 0
+        digit.push(0);
+        // 存放所有的操作，包括 +/-
         Stack<Character> symbol = new Stack<>();
+        //去除空格
+        s = s.replaceAll(" ", "");
+        char[] chars = s.toCharArray();
+        int m = chars.length;
         for (int i = 0; i < m; i++) {
             char c = chars[i];
-            switch (c) {
-                case '(':
-                    symbol.push('(');
-                    break;
-                case ')':
-                    Character pop = symbol.pop();
-                    if(null != pop && pop == '(' && !symbol.isEmpty()){
-                        Integer pop1 = digit.pop();
-                        Integer pop2 = digit.pop();
-                        Character sy = symbol.pop();
-                        if (sy == '+') {
-                            digit.push(pop2 + pop1);
-                        } else if (sy == '-') {
-                            digit.push(pop2 - pop1);
-                        }
+            if (c == '(') {
+                symbol.push(c);
+            } else if (c == ')') {
+                // 计算到最近一个左括号为止
+                while (!symbol.isEmpty()) {
+                    char op = symbol.peek();
+                    if (op != '(') {
+                        calc(digit, symbol);
+                    } else {
+                        symbol.pop();
+                        break;
                     }
-                    while (pop != '(') {
-                        Integer pop1 = digit.pop();
-                        Integer pop2 = digit.pop();
-                        if (pop == '+') {
-                            digit.push(pop2 + pop1);
-                        } else if (pop == '-') {
-                            digit.push(pop2 - pop1);
-                        }
-                        pop = symbol.pop();
+                }
+            } else {
+                if (Character.isDigit(c)) {
+                    //取出当前数字
+                    int num = 0;
+                    int j = i;
+                    // 将从 i 位置开始后面的连续数字整体取出，加入 nums
+                    while (j < m && Character.isDigit(chars[j])) {
+                        num = num * 10 + (int) (chars[j] - '0');
+                        j++;
                     }
-
-                    break;
-                case '+':
-                    if (i + 1 < m) {
-                        if (chars[i + 1] == '(') {
-                            symbol.push('+');
-                        } else if (chars[i + 1] == '-') {
-                            symbol.push('-');
-                            i++;
-                        } else {
-                            Integer pop1 = digit.pop();
-                            int[] arr = getDigit(sb.toString(), i+1, m, chars);
-                            digit.push(pop1 + arr[0]);
-                            i = arr[1];
-                        }
+                    digit.push(num);
+                    i = j - 1;
+                } else {
+                    //如果当前字符为符号位，且前一位仍为符号位，则添加0
+                    if (i > 0 && (chars[i - 1] == '(' || chars[i - 1] == '+' || chars[i - 1] == '-')) {
+                        digit.push(0);
                     }
-                    break;
-                case '-':
-                    if (i + 1 < m) {
-                        if (chars[i + 1] == '(') {
-                            symbol.push('-');
-                        } else if (chars[i + 1] == '+') {
-                            symbol.push('-');
-                            i++;
-                        } else {
-                            Integer pop1 = digit.pop();
-                            int[] arr = getDigit(sb.toString(), i+1, m, chars);
-                            digit.push(pop1 - arr[0]);
-                            i = arr[1];
-                        }
+                    // 有一个新操作要入栈时，先把栈内可以算的都算了
+                    while (!symbol.isEmpty() && symbol.peek() != '(') {
+                        calc(digit, symbol);
                     }
-                    break;
-                default:
-                    int[] arr = getDigit(sb.toString(), i, m, chars);
-                    digit.push(arr[0]);
-                    i = arr[1];
+                    symbol.push(c);
+                }
             }
+        }
+        while (!symbol.isEmpty()) {
+            calc(digit, symbol);
         }
         return digit.pop();
     }
 
-    public static int[] getDigit(String s, int start, int length, char[] chars) {
-        //获取数字
-        int current = start;
-        while (current + 1 < length && Character.isDigit(chars[current + 1])) {
-            current++;
+    public static void calc(Stack<Integer> digit, Stack<Character> sympol) {
+        if (digit.isEmpty() || digit.size() < 2) return;
+        if (sympol.isEmpty()) return;
+        int b = digit.pop(), a = digit.pop();
+        char op = sympol.pop();
+        digit.push(op == '+' ? a + b : a - b);
+    }
+
+
+    //官方解法  括号展开 + 栈
+    //因此，我们考虑使用一个取值为 {−1,+1} 的整数 sign代表「当前」的符号。根据括号表达式的性质，它的取值：
+    public static int calculate1(String s) {
+        Deque<Integer> ops = new LinkedList<Integer>();
+        ops.push(1);
+        int sign = 1;
+        int ret = 0;
+        int n = s.length();
+        int i = 0;
+        while (i < n) {
+            //去除括号
+            if (s.charAt(i) == ' ') {
+                i++;
+            } else if (s.charAt(i) == '+') {
+                sign = ops.peek();
+                i++;
+            } else if (s.charAt(i) == '-') {
+                sign = -ops.peek();
+                i++;
+            } else if (s.charAt(i) == '(') {
+                ops.push(sign);
+                i++;
+            } else if (s.charAt(i) == ')') {
+                ops.pop();
+                i++;
+            } else {
+                long num = 0;
+                while (i < n && Character.isDigit(s.charAt(i))) {
+                    num = num * 10 + s.charAt(i) - '0';
+                    i++;
+                }
+                ret += sign * num;
+            }
         }
-        return new int[]{Integer.parseInt(s.substring(start, current + 1)),current};
+        return ret;
     }
 
     public static void main(String[] args) {
-        String s = "1-(     -2)";
+        String s = "(1+(4+5+2)-3)+(6+8)";
         System.out.println(calculate(s));
+        System.out.println(calculate1(s));
         System.out.println("----------------------");
     }
 
