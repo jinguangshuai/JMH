@@ -25,7 +25,7 @@ public class test59_mergeTwoLists {
         }
     }
 
-    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+    public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         ListNode head = null, tail = null;
         while (null != list1 && null != list2) {
             if (null == head) {
@@ -42,22 +42,50 @@ public class test59_mergeTwoLists {
                     tail = tail.next;
                     list2 = list2.next;
                 } else {
-                    head = tail = new ListNode(list1.val);
+                    tail.next = new ListNode(list1.val);
                     tail = tail.next;
                     list1 = list1.next;
                 }
             }
-            while (null != list1){
+        }
+        while (null != list1){
+            if(null == head){
+                head = tail = new ListNode(list1.val);
+                list1 = list1.next;
+            }else {
                 tail.next = new ListNode(list1.val);
                 tail = tail.next;
                 list1 = list1.next;
             }
-            while (null != list2){
+        }
+        while (null != list2){
+            if(null == head){
+                head = tail = new ListNode(list2.val);
+                list2 = list2.next;
+            }else {
                 tail.next = new ListNode(list2.val);
                 tail = tail.next;
                 list2 = list2.next;
             }
         }
         return head;
+    }
+
+
+    public static void main(String[] args) {
+        ListNode l1 = new ListNode(1);
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(4);
+        ListNode l2 = new ListNode(1);
+        l2.next = new ListNode(3);
+        l2.next.next = new ListNode(4);
+//        ListNode l1 = null;
+//        ListNode l2 = new ListNode(0);
+        ListNode listNode = mergeTwoLists(l1, l2);
+        while (null != listNode) {
+            System.out.println(listNode.val);
+            listNode = listNode.next;
+        }
+
     }
 }
