@@ -6,6 +6,10 @@ package com.jgs.jmh.leetCode07_LinkedList;
  * @Description:com.jgs.jmh.leetCode07_LinkedList
  * @version:1.0
  */
+
+/**
+ * * 将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。
+ */
 public class test59_mergeTwoLists {
     public static class ListNode {
         int val;
