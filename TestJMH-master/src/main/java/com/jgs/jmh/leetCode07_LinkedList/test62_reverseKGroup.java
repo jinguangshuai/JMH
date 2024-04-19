@@ -127,6 +127,49 @@ public class test62_reverseKGroup {
     }
 
 
+
+
+    //官方解法优化  少了一个参数
+    public static ListNode reverseKGroup2(ListNode head, int k) {
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+        ListNode pre = dummyNode;
+        while (null != head){
+            ListNode tail = pre;
+            for (int i = 0; i < k; i++) {
+                tail = tail.next;
+                if(null == tail){
+                    return dummyNode.next;
+                }
+            }
+            ListNode node = pre.next;
+            ListNode[] listNodes = reverse2(node, tail);
+            head = listNodes[0];
+            tail = listNodes[1];
+            pre.next = head;
+            pre = tail;
+        }
+        return dummyNode.next;
+
+    }
+
+    public static ListNode[] reverse2(ListNode node ,ListNode tail){
+        ListNode pre = tail.next;
+        ListNode cur = node;
+        while (pre != tail){
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return new ListNode[]{tail,node};
+    }
+
+
+
+
+
+
     public static void print(ListNode node) {
         while (null != node) {
             System.out.println(node.value);
@@ -140,7 +183,7 @@ public class test62_reverseKGroup {
         listNode.next.next = new ListNode(3);
         listNode.next.next.next = new ListNode(4);
         listNode.next.next.next.next = new ListNode(5);
-        ListNode listNode1 = reverseKGroup1(listNode, 2);
+        ListNode listNode1 = reverseKGroup2(listNode, 2);
         print(listNode1);
     }
 }

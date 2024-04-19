@@ -57,11 +57,11 @@ public class reverseLinked {
         listNode.next.next.next = new ListNode(4);
         listNode.next.next.next.next = new ListNode(5);
 
-//        ListNode listNode1 = reverseHeadNode(listNode);
-//        System.out.println(listNode1.value);
+        ListNode listNode1 = reverseHeadNode(listNode);
+        System.out.println(listNode1.value);
 
-        ListNode listNode2 = reverseTailNode(listNode);
-        System.out.println(listNode2.value);
+//        ListNode listNode2 = reverseTailNode(listNode);
+//        System.out.println(listNode2.value);
     }
     
     
