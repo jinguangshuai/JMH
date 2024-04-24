@@ -2,6 +2,7 @@ package com.jgs.jmh.leetCode08_BinaryTree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * @Auther：jinguangshuai
@@ -65,5 +66,125 @@ public class test0_buildTree {
             lastPNode.right = nodes.get(lastPNodeIndex * 2 + 2);
         }
         return nodes.get(0);
+    }
+
+
+
+    //递归前序遍历
+    public static void preByRecursion(TreeNode root){
+        if(null == root){
+            return;
+        }
+        System.out.print("前序遍历");
+        System.out.print(root.val + " ");
+        preByRecursion(root.left);
+        preByRecursion(root.right);
+    }
+    //非递归前序遍历
+    public static void preByNoRecursion(TreeNode root){
+        if(null == root){
+            return;
+        }
+        System.out.print("前序遍历结果为：");
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            System.out.print(node.val + "  ");
+            if(null != node.left){
+                stack.push(node.left);
+            }
+            if(null != node.right){
+                stack.push(node.right);
+            }
+        }
+    }
+
+    //递归中序遍历
+    public static void inByRecursion(TreeNode root){
+        if(null == root){
+            return;
+        }
+        inByRecursion(root.left);
+        System.out.print("中序遍历");
+        System.out.print(root.val + " ");
+        inByRecursion(root.right);
+    }
+    //非递归中序遍历
+    public static void inByNoRecursion(TreeNode root){
+        if(null == root){
+            return;
+        }
+        System.out.print("中序遍历结果为：");
+        Stack<TreeNode> stack = new Stack<>();
+        while (!stack.isEmpty() || null != root){
+            if(null != root){
+                stack.push(root);
+                root = root.left;
+            }else {
+                root = stack.pop();
+                System.out.print(root.val + "  ");
+                root = root.right;
+            }
+        }
+    }
+
+    //递归后序遍历
+    public static void posByRecursion(TreeNode root){
+        if(null == root){
+            return;
+        }
+        posByRecursion(root.left);
+        posByRecursion(root.right);
+        System.out.print("后序遍历");
+        System.out.print(root.val + " ");
+    }
+    //非递归后序遍历
+    public static void posByNoRecursion(TreeNode root){
+        if(null == root){
+            return;
+        }
+        System.out.print("后序遍历结果为：");
+        Stack<TreeNode> stack1 = new Stack<>();
+        Stack<TreeNode> stack2 = new Stack<>();
+        stack1.push(root);
+        while (!stack1.isEmpty()){
+            TreeNode node = stack1.pop();
+            stack2.push(node);
+            if(null != node.left){
+                stack1.push(node.left);
+            }
+            if(null != node.right){
+                stack1.push(node.right);
+            }
+        }
+        while (!stack2.isEmpty()){
+            System.out.print(stack2.pop().val + "  ");
+        }
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.left.left = new TreeNode(4);
+        root.left.right = new TreeNode(5);
+        root.right.left = new TreeNode(6);
+        root.right.right = new TreeNode(7);
+        //前序遍历
+        preByRecursion(root);
+        System.out.println("---------------");
+        preByNoRecursion(root);
+        System.out.println("---------------");
+        //中序遍历
+        inByRecursion(root);
+        System.out.println("---------------");
+        inByNoRecursion(root);
+        System.out.println("---------------");
+        //后序遍历
+        posByRecursion(root);
+        System.out.println("---------------");
+        posByNoRecursion(root);
+        System.out.println("---------------");
     }
 }
