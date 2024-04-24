@@ -62,7 +62,7 @@ public class test77_sumNumbers {
         if (null == root) {
             return 0;
         }
-        return Integer.valueOf(sumNumbers(root,""));
+        return Integer.parseInt(sumNumbers(root,""));
     }
 
     public static String sumNumbers(TreeNode root, String sum) {
@@ -73,10 +73,39 @@ public class test77_sumNumbers {
         if (null == root.left && null == root.right) {
             return sum;
         }else {
-            String left = sumNumbers(root.left,String.valueOf(root.val));
-            String right = sumNumbers(root.right,String.valueOf(root.val));
-            return String.valueOf(Integer.valueOf(left) + Integer.valueOf(right));
+            String left = sumNumbers(root.left,sum);
+            String right = sumNumbers(root.right,sum);
+            int leftValue = 0,rightValue = 0;
+            if(!"".equals(left)){
+                leftValue = Integer.parseInt(left);
+            }
+            if(!"".equals(right)){
+                rightValue = Integer.parseInt(right);
+            }
+            return String.valueOf(leftValue + rightValue);
         }
+    }
+
+    //回溯解决
+    //目标是寻找每一个叶子结点，在寻找过程中维护一个路径数字num，一个路径数字总和sum。dfs到叶子结点时，
+    // 立即累计num到sum。当前结点的子空间探索结束后，num需要撤销node带来的贡献，撤销动作为num = (num - node.val) / 10。
+    //在典型的回溯问题中，探索一个结点的子空间通常以for（多叉树回溯形式）来完成，
+    // 但本题的树是二叉树，且回溯条件是左右儿子皆空（即当前结点为叶子结点），
+    // 因此将dfs(node.left)与dfs(node.right)依次写出即相当于完成了当前node子空间的探索。
+    static int sum = 0, num = 0;
+    public static int sumNumbers2(TreeNode root) {
+        dfs(root);
+        return sum;
+    }
+    private static void dfs(TreeNode node){
+        if(node == null) return;
+        num = num * 10 + node.val;
+        if(node.left == null && node.right == null){
+            sum += num;
+        }
+        dfs(node.left);
+        dfs(node.right);
+        num = (num - node.val) / 10;
     }
 
 
