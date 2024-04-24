@@ -98,14 +98,14 @@ public class test70_invertTree {
 
 
     //前序打印二叉树
-    public static void printPos(TreeNode node){
+    public static void printPre(TreeNode node){
         if(null == node){
 //            System.out.println("null");
             return;
         }
         System.out.println(node.val);
-        printPos(node.left);
-        printPos(node.right);
+        printPre(node.left);
+        printPre(node.right);
     }
 
     //中序打印二叉树
