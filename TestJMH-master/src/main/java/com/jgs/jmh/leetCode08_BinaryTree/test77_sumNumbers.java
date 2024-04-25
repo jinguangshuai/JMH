@@ -9,6 +9,16 @@ import java.util.Queue;
  * @Description:com.jgs.jmh.leetCode08_BinaryTree
  * @version:1.0
  */
+
+/**
+ * * 给你一个二叉树的根节点 root ，树中每个节点都存放有一个 0 到 9 之间的数字。
+ * 每条从根节点到叶节点的路径都代表一个数字：
+ * <p>
+ * 例如，从根节点到叶节点的路径 1 -> 2 -> 3 表示数字 123 。
+ * 计算从根节点到叶节点生成的 所有数字之和 。
+ * <p>
+ * 叶节点 是指没有子节点的节点。
+ */
 public class test77_sumNumbers {
 
     public static class TreeNode {
@@ -62,7 +72,7 @@ public class test77_sumNumbers {
         if (null == root) {
             return 0;
         }
-        return Integer.parseInt(sumNumbers(root,""));
+        return Integer.parseInt(sumNumbers(root, ""));
     }
 
     public static String sumNumbers(TreeNode root, String sum) {
@@ -72,14 +82,14 @@ public class test77_sumNumbers {
         sum += String.valueOf(root.val);
         if (null == root.left && null == root.right) {
             return sum;
-        }else {
-            String left = sumNumbers(root.left,sum);
-            String right = sumNumbers(root.right,sum);
-            int leftValue = 0,rightValue = 0;
-            if(!"".equals(left)){
+        } else {
+            String left = sumNumbers(root.left, sum);
+            String right = sumNumbers(root.right, sum);
+            int leftValue = 0, rightValue = 0;
+            if (!"".equals(left)) {
                 leftValue = Integer.parseInt(left);
             }
-            if(!"".equals(right)){
+            if (!"".equals(right)) {
                 rightValue = Integer.parseInt(right);
             }
             return String.valueOf(leftValue + rightValue);
@@ -93,14 +103,16 @@ public class test77_sumNumbers {
     // 但本题的树是二叉树，且回溯条件是左右儿子皆空（即当前结点为叶子结点），
     // 因此将dfs(node.left)与dfs(node.right)依次写出即相当于完成了当前node子空间的探索。
     static int sum = 0, num = 0;
+
     public static int sumNumbers2(TreeNode root) {
         dfs(root);
         return sum;
     }
-    private static void dfs(TreeNode node){
-        if(node == null) return;
+
+    private static void dfs(TreeNode node) {
+        if (node == null) return;
         num = num * 10 + node.val;
-        if(node.left == null && node.right == null){
+        if (node.left == null && node.right == null) {
             sum += num;
         }
         dfs(node.left);
