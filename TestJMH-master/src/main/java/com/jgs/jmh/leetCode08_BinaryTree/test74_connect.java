@@ -11,15 +11,15 @@ import java.util.*;
 
 /**
  * * 给定一个二叉树：
- *
+ * <p>
  * struct Node {
- *   int val;
- *   Node *left;
- *   Node *right;
- *   Node *next;
+ * int val;
+ * Node *left;
+ * Node *right;
+ * Node *next;
  * }
  * 填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL 。
- *
+ * <p>
  * 初始状态下，所有 next 指针都被设置为 NULL 。
  */
 public class test74_connect {
@@ -50,26 +50,26 @@ public class test74_connect {
     //if（size >1）,则证明队列至少有两个数字，则数字的下一个为queue.peek(),
     //否则size = 1，则证明当前行只剩下一个数字，则该数字的next为null
     public static Node connect(Node root) {
-        if(null == root){
+        if (null == root) {
             return null;
         }
         Queue<Node> queue = new LinkedList<>();
         root.next = null;
         queue.add(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int size = queue.size();
             int count = size;
-            while (count > 0){
+            while (count > 0) {
                 Node node = queue.poll();
-                if(null != queue.peek() && count > 1){
+                if (null != queue.peek() && count > 1) {
                     node.next = queue.peek();
-                }else {
+                } else {
                     node.next = null;
                 }
-                if(null != node.left){
+                if (null != node.left) {
                     queue.add(node.left);
                 }
-                if(null != node.right){
+                if (null != node.right) {
                     queue.add(node.right);
                 }
                 count--;
@@ -116,21 +116,48 @@ public class test74_connect {
         return root;
     }
 
+    //深度优先遍历
+    static List<Node> list = new ArrayList<>();
+    public static Node connect3(Node root) {
+        dfs(root,0);
+        return root;
+    }
+    public static void dfs(Node root, int level) {
+        if (null == root) {
+            return;
+        }
+        //level大于list的长度，说明未遍历到底部，需要继续添加元素
+        if(list.size()<= level){
+            list.add(root);
+        }else {
+            //判断当前元素与数组存储元素是否相同，如果不同，则右指针指向当前元素
+            if (list.get(level) != root) {
+                list.get(level).next = root;
+            }
+            //更新数组当前元素
+            list.set(level, root);
+        }
+        dfs(root.left, level + 1);
+        dfs(root.right, level + 1);
+    }
+
+
     //官方解法
-    static Node last = null,nextStart = null;
+    static Node last = null, nextStart = null;
+
     public static Node connect2(Node root) {
-        if(null == root){
+        if (null == root) {
             return null;
         }
         Node start = root;
-        while (null != start){
+        while (null != start) {
             last = null;
             nextStart = null;
             for (Node p = start; null != p; p = p.next) {
-                if(null != p.left){
+                if (null != p.left) {
                     help(p.left);
                 }
-                if(null != p.right){
+                if (null != p.right) {
                     help(p.right);
                 }
             }
@@ -138,11 +165,12 @@ public class test74_connect {
         }
         return root;
     }
-    public static void help(Node p){
-        if(null != last){
+
+    public static void help(Node p) {
+        if (null != last) {
             last.next = p;
         }
-        if(null == nextStart){
+        if (null == nextStart) {
             nextStart = p;
         }
         last = p;
@@ -150,24 +178,24 @@ public class test74_connect {
 
 
     //横向打印
-    public static void print(Node node){
-        if(null == node){
+    public static void print(Node node) {
+        if (null == node) {
             System.out.println("null");
             return;
         }
         Queue<Node> queue = new LinkedList<>();
         queue.add(node);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             Node node1 = queue.poll();
-            if(null == node1.next){
+            if (null == node1.next) {
                 System.out.println(node1.val + "-------" + "null");
-            }else {
+            } else {
                 System.out.println(node1.val + "-------" + node1.next.val);
             }
-            if(null != node1.left){
+            if (null != node1.left) {
                 queue.add(node1.left);
             }
-            if(null != node1.right){
+            if (null != node1.right) {
                 queue.add(node1.right);
             }
         }
@@ -181,7 +209,7 @@ public class test74_connect {
         node.left.right = new Node(5);
 //        node.right.left = new Node(6);
         node.right.right = new Node(7);
-        Node connect = connect2(node);
+        Node connect = connect3(node);
         print(connect);
 
 
