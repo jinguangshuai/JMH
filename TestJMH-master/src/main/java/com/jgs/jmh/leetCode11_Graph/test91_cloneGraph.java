@@ -42,26 +42,27 @@ public class test91_cloneGraph {
             this.neighbors = neighbors;
         }
     }
+
     //宽度优先遍历
     public static Node cloneGraph1(Node node) {
         if (null == node) {
             return null;
         }
         //key为老节点---value为新建节点
-        HashMap<Node,Node> map = new HashMap<>();
+        HashMap<Node, Node> map = new HashMap<>();
         // 将题目给定的节点添加到队列
         Queue<Node> queue = new LinkedList<>();
         queue.add(node);
         // 克隆第一个节点并存储到哈希表中
-        map.put(node,new Node(node.val,new ArrayList<>()));
+        map.put(node, new Node(node.val, new ArrayList<>()));
         while (!queue.isEmpty()) {
             // 取出队列的头节点
             Node old = queue.poll();
             // 遍历该节点的邻居
-            for(Node neighbor : old.neighbors){
-                if(!map.containsKey(neighbor)){
+            for (Node neighbor : old.neighbors) {
+                if (!map.containsKey(neighbor)) {
                     // 如果没有被访问过，就克隆并存储在哈希表中
-                    map.put(neighbor,new Node(neighbor.val,new ArrayList<>()));
+                    map.put(neighbor, new Node(neighbor.val, new ArrayList<>()));
                     queue.add(neighbor);
                 }
                 // 更新当前节点的邻居列表
@@ -71,22 +72,24 @@ public class test91_cloneGraph {
         }
         return map.get(node);
     }
+
     //深度优先遍历
-    static HashMap<Node,Node> map = new HashMap<>();
+    static HashMap<Node, Node> map = new HashMap<>();
+
     public static Node cloneGraph(Node node) {
         if (null == node) {
             return null;
         }
         // 如果该节点已经被访问过了，则直接从哈希表中取出对应的克隆节点返回
-        if(map.containsKey(node)){
+        if (map.containsKey(node)) {
             return map.get(node);
         }
         // 克隆节点，注意到为了深拷贝我们不会克隆它的邻居的列表
-        Node clone = new Node(node.val,new ArrayList<>());
+        Node clone = new Node(node.val, new ArrayList<>());
         // 哈希表存储
-        map.put(node,clone);
+        map.put(node, clone);
         // 遍历该节点的邻居并更新克隆节点的邻居列表
-        for(Node neighbor : node.neighbors){
+        for (Node neighbor : node.neighbors) {
             clone.neighbors.add(cloneGraph(neighbor));
         }
         return clone;
