@@ -89,6 +89,10 @@ public class test97_ladderLength {
     }
 
     //广度优先遍历+优先成图
+    //基本思路
+    //（1）利用图的构建方式，构建每个单词与虚拟单词的联系。例如hit的虚拟单词（*it h*t hi*）
+    //（2）新建dis数组，记录从起始位置（beginId）到终止位置单词(endId)的长度
+    //（3）由于添加虚拟节点，故长度需要除以2，由于未添加起始单词的贡献，因为我们需添加起始单词
     static Map<String, Integer> map = new HashMap<>();
     static List<List<Integer>> edges = new ArrayList<>();
     static int nodeNum = 0;
@@ -145,6 +149,15 @@ public class test97_ladderLength {
 
     //双向广度优先遍历
     //广度优先遍历+优先成图
+    //基本思路
+    //（1）利用图的构建方式，构建每个单词与虚拟单词的联系。例如hit的虚拟单词（*it h*t hi*）
+    //（2）新建disBegin数组，disEnd数组，
+    // 记录从disBegin数组起始位置（beginId）到终止位置单词(endId)的长度
+    // 记录从disEnd数组起始位置（endId）到终止位置单词(beginId)的长度
+    //一旦两者相遇，即disBegin[nodeId] != Integer.MAX_VALUE 并且 disEnd[nodeId] != Integer.MAX_VALUE
+    //（3）由于添加虚拟节点，长度为（disBegin[nodeId] + disEnd[nodeId]）/2 +1 或者
+    //（disEnd[nodeId] + disBegin[nodeId]）/2 +1
+    // 由于未添加起始单词的贡献，因为我们需添加起始单词
     static Map<String, Integer> newMap = new HashMap<>();
     static List<List<Integer>> newEdges = new ArrayList<>();
     static int newNodeNum = 0;
