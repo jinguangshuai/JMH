@@ -71,8 +71,9 @@ public class test95_snakesAndLadders {
         //获取列数
         int col = (id - 1) % n;
         //如果为逆序，则处于 n - 1 - col
-        //如果 row为偶数，则列从左往右
-        //如果 row为奇数，则列从右往左
+        //此时row为从下往上的层数，
+        //例如row为0，为倒数第一层，为偶数，从左往右
+        //例如row为1，为倒数第一层，为奇数，从右往左
         if (row % 2 == 1) {
             col = n - 1 - col;
         }
