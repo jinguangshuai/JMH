@@ -68,7 +68,7 @@ public class Code03_PrintAllPermutations {
 	}
 
 	public static void main(String[] args) {
-		String s = "aac";
+		String s = "abc";
 		List<String> ans1 = permutation(s);
 		for (String str : ans1) {
 			System.out.println(str);

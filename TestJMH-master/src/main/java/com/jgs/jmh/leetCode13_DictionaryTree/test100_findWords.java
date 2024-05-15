@@ -29,7 +29,7 @@ public class test100_findWords {
         Set<String> ans = new HashSet<>();
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[0].length; col++) {
-                dfs1(row, col, board, trie, ans);
+                dfs3(row, col, board, trie, ans);
             }
         }
         return new ArrayList<>(ans);
@@ -112,7 +112,6 @@ public class test100_findWords {
 
 
 
-
     //（1）根据待处理的字符串构建前缀树
     //（2）判断矩阵内是否存在前缀树，如果存在，进行记录
     //（3）返回结果
@@ -181,9 +180,7 @@ public class test100_findWords {
 
 
     static Trie trie = new Trie();
-
     public static List<String> findWords(char[][] board, String[] words) {
-
         for (String word : words) {
             trie.insert(word);
         }

@@ -189,15 +189,15 @@ public class test97_ladderLength {
             int queueBeginSize = queueBegin.size();
             //横向遍历
             for (int i = 0; i < queueBeginSize; i++) {
-                int nodeBegin = queueBegin.poll();
+                int node = queueBegin.poll();
                 //当发现某一时刻两边都访问过同一顶点时就停止搜索
                 //如果结束队列已经遍历到开始节点，则说明已经遍历完毕，结果为两个队列的开始值之和除以2 + 1
-                if (disEnd[nodeBegin] != Integer.MAX_VALUE) {
-                    return (disBegin[nodeBegin] + disEnd[nodeBegin]) / 2 + 1;
+                if (disEnd[node] != Integer.MAX_VALUE) {
+                    return (disBegin[node] + disEnd[node]) / 2 + 1;
                 }
-                for (int it : newEdges.get(nodeBegin)) {
+                for (int it : newEdges.get(node)) {
                     if (disBegin[it] == Integer.MAX_VALUE) {
-                        disBegin[it] = disBegin[nodeBegin] + 1;
+                        disBegin[it] = disBegin[node] + 1;
                         queueBegin.add(it);
                     }
                 }
@@ -205,15 +205,15 @@ public class test97_ladderLength {
             //反向队列，从结束位置开始遍历到开始位置
             int queueEndSize = queueEnd.size();
             for (int i = 0; i < queueEndSize; i++) {
-                int nodeEnd = queueEnd.poll();
+                int node = queueEnd.poll();
                 //当发现某一时刻两边都访问过同一顶点时就停止搜索
                 //如果开始队列已经遍历到终止节点，则说明已经遍历完毕，结果为两个队列的结束值之和除以2 + 1
-                if (disBegin[nodeEnd] != Integer.MAX_VALUE) {
-                    return (disBegin[nodeEnd] + disEnd[nodeEnd]) / 2 + 1;
+                if (disBegin[node] != Integer.MAX_VALUE) {
+                    return (disBegin[node] + disEnd[node]) / 2 + 1;
                 }
-                for(int it : newEdges.get(nodeEnd)){
+                for(int it : newEdges.get(node)){
                     if(disEnd[it] == Integer.MAX_VALUE){
-                        disEnd[it] = disEnd[nodeEnd] + 1;
+                        disEnd[it] = disEnd[node] + 1;
                         queueEnd.add(it);
                     }
                 }
