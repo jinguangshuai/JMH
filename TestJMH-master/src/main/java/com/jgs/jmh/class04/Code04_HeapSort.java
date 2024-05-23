@@ -5,6 +5,10 @@ import java.util.PriorityQueue;
 
 public class Code04_HeapSort {
 
+    //1.首先将排序的数组构造成一个大根堆，此时整个数组的最大值为堆结构的顶端
+    //2.将顶端的数与末尾的数进行交换，此时，未尾的数为最大值，剩余待排序数组个数为n-1
+    //3.将剩余的n-1个数再构造成大根堆，在将顶端的数与n-1位置的数交换，如此反复便能得到有序数组
+    //注意升序使用大根堆，降序使用小根堆（默认为升序）
     // 堆排序额外空间复杂度O(1)
     public static void heapSort(int[] arr) {
         if (arr == null || arr.length < 2) {
@@ -18,7 +22,7 @@ public class Code04_HeapSort {
 //			heapify(arr, i, arr.length);
 //		}
         int heapSize = arr.length;
-        //arr[0] 和 arr[arr.length-1]交换
+        //arr[0] 和 arr[arr.length-1]交换，0位置最大值和末尾交换，并且size减1
         swap(arr, 0, --heapSize);
         // O(N*logN)
         while (heapSize > 0) { // O(N)
