@@ -50,6 +50,7 @@ public class test115_searchMatrix {
         return false;
     }
 
+    //一次查找：若将矩阵每一行拼接在上一行的末尾，则会得到一个升序数组，我们可以在该数组上二分找到目标元素。
     public static boolean searchMatrix2(int[][] matrix, int target) {
         int m = matrix.length, n = matrix[0].length;
         int left = 0, right = m * n - 1;

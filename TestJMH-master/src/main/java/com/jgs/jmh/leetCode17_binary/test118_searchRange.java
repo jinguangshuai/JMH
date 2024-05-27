@@ -48,8 +48,39 @@ public class test118_searchRange {
         return new int[]{begin, left};
     }
 
-    //官方解法
     public static int[] searchRange2(int[] nums, int target) {
+        if (null == nums || nums.length == 0) {
+            return new int[]{-1, -1};
+        }
+        int begin = 0;
+        int left = 0, right = nums.length - 1;
+        //左侧逼近，寻找最左侧的节点
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        if (nums[left] != target) return new int[]{-1, -1};
+        begin = left;
+        left = 0;
+        right = nums.length;
+        //右侧逼近，寻找最右侧的节点
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] > target) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return new int[]{begin, left - 1};
+    }
+
+    //官方解法
+    public static int[] searchRange3(int[] nums, int target) {
         if (null == nums || nums.length == 0) {
             return new int[]{-1, -1};
         }
@@ -80,7 +111,7 @@ public class test118_searchRange {
     public static void main(String[] args) {
         int[] nums = {5, 7, 7, 8, 8, 10};
         int target = 8;
-        int[] ints = searchRange2(nums, target);
+        int[] ints = searchRange1(nums, target);
         for (int i = 0; i < ints.length; i++) {
             System.out.println(ints[i]);
         }
