@@ -14,17 +14,6 @@ package com.jgs.jmh.leetCode19_bitwise;
  */
 public class test129_singleNumber {
 
-    //a^a = 0  a^0 = a
-    public static int singleNumber1(int[] nums) {
-        int m = 0;
-        int n = 0;
-        for (int num : nums) {
-            m = ~n & (m ^ num);
-            n = ~m & (n ^ num);
-        }
-        return m;
-    }
-
     //每一个数字的二进制，都是0或者3，非答案的第i个二进制位，每一个都出现了三次
     //对于数组的每一个元素x，使用位运算 (x>>i) & 1得到第i个二进制位，然后对3取余，就可以得到答案的第i个二进制位
     public static int singleNumber2(int[] nums) {
@@ -73,6 +62,6 @@ public class test129_singleNumber {
 
     public static void main(String[] args) {
         int[] nums = {2, 2, 3, 2};
-        System.out.println(singleNumber1(nums));
+        System.out.println(singleNumber4(nums));
     }
 }
