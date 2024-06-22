@@ -12,15 +12,17 @@ import java.util.Queue;
 //构建三叉数
 public class test05 {
 
-    public static class Node{
+    public static class Node {
         int val;
         Node left;
         Node right;
         Node parent;
-        public Node(){
+
+        public Node() {
 
         }
-        public Node(int val){
+
+        public Node(int val) {
             this.val = val;
             this.left = null;
             this.right = null;
@@ -28,16 +30,16 @@ public class test05 {
         }
     }
 
-    public static void generate(Node node,int k){
+    public static void generate(Node node, int k) {
         int count = 1;
         int val = 1;
         Queue<Node> queue = new LinkedList<>();
         queue.add(node);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             Node cur = queue.poll();
             Node left = new Node(++val);
             left.parent = cur;
-            cur.left  = left;
+            cur.left = left;
             count++;
             queue.add(left);
 
@@ -46,22 +48,31 @@ public class test05 {
             cur.right = right;
             count++;
             queue.add(right);
-            if(count == Math.pow(2,k-1) + 1){
+            if (count == Math.pow(2, k - 1) + 1) {
                 break;
             }
         }
     }
 
-    public static void print(Node node){
+    public static void dfs(Node node) {
+        if (null == node) {
+            return;
+        }
+        System.out.println(node.val);
+        dfs(node.left);
+        dfs(node.right);
+    }
+
+    public static void print(Node node) {
         Queue<Node> queue = new LinkedList<>();
         queue.add(node);
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             Node cur = queue.poll();
             System.out.println(cur.val);
-            if(null != cur.left){
+            if (null != cur.left) {
                 queue.add(cur.left);
             }
-            if(null != cur.right){
+            if (null != cur.right) {
                 queue.add(cur.right);
             }
         }
@@ -69,7 +80,9 @@ public class test05 {
 
     public static void main(String[] args) {
         Node node = new Node(1);
-        generate(node,4);
+        generate(node, 4);
         print(node);
+        System.out.println("----------");
+        dfs(node);
     }
 }
