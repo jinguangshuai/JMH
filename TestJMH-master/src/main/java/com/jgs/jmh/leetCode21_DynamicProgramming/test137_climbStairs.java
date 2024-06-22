@@ -36,6 +36,17 @@ public class test137_climbStairs {
         return dp[n];
     }
 
+    //空间复杂度为1
+    public int climbStairs5(int n) {
+        int p = 0, q = 0, r = 1;
+        for (int i = 1; i <= n; ++i) {
+            p = q;
+            q = r;
+            r = p + q;
+        }
+        return r;
+    }
+
     //进阶爬楼梯  总共有m级别，可爬的步数集合为[4,5]
     public static int climbStairs3(int n, int[] arr) {
         int[] dp = new int[n + 1];

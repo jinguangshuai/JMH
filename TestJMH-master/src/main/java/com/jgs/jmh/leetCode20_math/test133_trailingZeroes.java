@@ -37,8 +37,19 @@ public class test133_trailingZeroes {
         return ans;
     }
 
+    public static int trailingZeroes3(int n) {
+        int ans = 0;
+        for (int i = 5; i <= n; i += 5) {
+            for (int x = i; x % 5 == 0; x /= 5) {
+                ++ans;
+            }
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
         int n = 30;
         System.out.println(trailingZeroes1(n));
+        System.out.println(trailingZeroes3(5));
     }
 }

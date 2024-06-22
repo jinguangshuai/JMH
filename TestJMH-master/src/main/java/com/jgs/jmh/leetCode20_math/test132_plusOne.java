@@ -53,7 +53,23 @@ public class test132_plusOne {
         int length = digits.length;
         for (int i = length - 1; i >= 0; i--) {
             digits[i] = (digits[i] + 1) % 10;
-            if(digits[i] != 0){
+            if (digits[i] != 0) {
+                return digits;
+            }
+        }
+        digits = new int[length + 1];
+        digits[0] = 1;
+        return digits;
+    }
+
+    public static int[] plusOne3(int[] digits) {
+        int length = digits.length;
+        for (int i = length - 1; i >= 0; i--) {
+            if (digits[i] != 9) {
+                ++digits[i];
+                for (int j = i + 1; j < length; j++) {
+                    digits[j] = 0;
+                }
                 return digits;
             }
         }
