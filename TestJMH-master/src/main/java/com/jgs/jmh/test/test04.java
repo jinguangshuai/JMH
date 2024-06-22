@@ -70,12 +70,12 @@ public class test04 {
         return head;
     }
 
-    public static void print(Node head){
+    public static void print(Node head) {
         Node row = head;
-        while (null != row){
+        while (null != row) {
             Node cur = row;
-            while (null != cur){
-                System.out.print(String.format("%3d  ",cur.val));
+            while (null != cur) {
+                System.out.print(String.format("%3d  ", cur.val));
                 cur = cur.right;
             }
             System.out.println();
@@ -83,10 +83,45 @@ public class test04 {
         }
     }
 
+    //从任一节点出发，打印所有节点
+    public static void printAll(Node node) {
+        if (null == node) return;
+        Node cur = node;
+        printCurLevel(cur);
+        Node up = cur.up, down = cur.down;
+        while (null != up) {
+            printCurLevel(up);
+            up = up.up;
+        }
+        while (null != down) {
+            printCurLevel(down);
+            down = down.down;
+        }
+    }
+
+    public static void printCurLevel(Node node) {
+        if (null == node) return;
+        System.out.print(String.format("%3d  ", node.val));
+        Node left = node.left, right = node.right;
+        while (null != left) {
+            System.out.print(String.format("%3d  ", left.val));
+            left = left.left;
+        }
+        while (null != right) {
+            System.out.print(String.format("%3d  ", right.val));
+            right = right.right;
+        }
+        System.out.println();
+    }
+
+
     public static void main(String[] args) {
         int n = 4;
-        System.out.println( n + "维度");
+        System.out.println(n + "维度");
         Node node = generateNode(n);
         print(node);
+        System.out.println("-----------");
+        node = node.down.down.right.right;
+        printAll(node);
     }
 }
