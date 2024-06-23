@@ -158,7 +158,7 @@ public class Node<T> {
 //        print(node);
         Node start = node.right.down;//7
         Node end = node.right.right.right.down.down.down;//19
-        
+
         List<Set<Node>> minPath = getMinPath(start, end);
         for(Set<Node> nodes : minPath){
             if(nodes.size() == min){
