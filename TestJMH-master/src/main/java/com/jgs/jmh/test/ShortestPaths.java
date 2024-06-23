@@ -16,6 +16,7 @@ public class ShortestPaths {
     private boolean[][] visited;
     private List<List<Integer>> allPaths = new ArrayList<>();
     private int rows, cols;
+    static int min = Integer.MAX_VALUE;
 
     public ShortestPaths(char[][] matrix) {
         this.matrix = matrix;
@@ -38,6 +39,7 @@ public class ShortestPaths {
         visited[x][y] = true;
 
         if (x == endX && y == endY) {
+            min = Math.min(min,path.size());
             allPaths.add(new ArrayList<>(path)); // 找到一条最短路径
         } else {
             for (int[] direction : DIRECTIONS) {
@@ -60,10 +62,6 @@ public class ShortestPaths {
 
         ShortestPaths sp = new ShortestPaths(matrix);
         sp.printAllShortestPaths(1, 1, 3, 3);
-        int min = Integer.MAX_VALUE;
-        for (List<Integer> path : sp.allPaths) {
-            min = Math.min(min,path.size());
-        }
         for (List<Integer> path : sp.allPaths) {
             if(path.size() == min){
                 for (int p : path) {
