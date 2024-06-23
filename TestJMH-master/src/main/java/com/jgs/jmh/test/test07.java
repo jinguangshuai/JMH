@@ -7,4 +7,14 @@ package com.jgs.jmh.test;
  * @version:1.0
  */
 public class test07 {
+
+    public class Node {
+        int val;
+        Node pre;
+        Node next;
+
+        public Node() {
+        }
+    }
+
 }
