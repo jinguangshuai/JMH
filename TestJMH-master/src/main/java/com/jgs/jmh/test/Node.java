@@ -1,5 +1,6 @@
 package com.jgs.jmh.test;
 
+import javax.xml.transform.Result;
 import java.util.*;
 
 /**
@@ -116,31 +117,59 @@ public class Node<T> {
         }
     }
 
-
-    public static List<List<Node>> getMinPath(Node start, Node end) {
-        List<List<Node>> result = new ArrayList<>();
+    //遍历获得所有路径，并找到最短路径，最后进行处理
+    public static List<Set<Node>> getMinPath(Node start, Node end) {
+        List<Set<Node>> result = new ArrayList<>();
         if (null == start || null == end || start == end) {
             return result;
         }
-        dfs(start, end, new HashSet<>());
-        dfs(start, end, new HashSet<>(), new ArrayList<>(), min, start, end);
+        dfs(start, end, new HashSet<>(),result);
         return result;
     }
-
     static int min = Integer.MAX_VALUE;
-
-
-    public static void dfs(Node start, Node end, Set<Node> element, List<Node> re, int min, Node inStart, Node inEnd) {
+    public static void dfs(Node start, Node end, Set<Node> element,List<Set<Node>> result) {
         if (null == start || null == end) {
             return;
         }
         if (start == end) {
-            if (element.size() == min) {
+            min = Math.min(min, element.size());
+            result.add(new HashSet<>(element));
+        }
+        element.add(start);
+        if (null != start.right && !element.contains(start.right)) {
+            dfs(start.right, end, new HashSet<>(element),result);
+        }
+        if (null != start.left && !element.contains(start.left)) {
+            dfs(start.left, end, new HashSet<>(element),result);
+        }
+        if (null != start.up && !element.contains(start.up)) {
+            dfs(start.up, end, new HashSet<>(element),result);
+        }
+        if (null != start.down && !element.contains(start.down)) {
+            dfs(start.down, end, new HashSet<>(element),result);
+        }
+        element.remove(start);
+    }
+
+
+
+    public static void main(String[] args) {
+        Node node = generate(5);
+//        print(node);
+        Node start = node.right.down;//7
+        Node end = node.right.right.right.down.down.down;//19
+        
+        List<Set<Node>> minPath = getMinPath(start, end);
+        for(Set<Node> nodes : minPath){
+            if(nodes.size() == min){
+                Node inStart = start;
+                Node inEnd = end;
                 Map<Node, Integer> map = new HashMap<>();
-                for (Node node : element) {
-                    map.put(node, (Integer) node.val);
+                for (Node no : nodes) {
+                    map.put(no, (Integer) no.val);
                 }
                 map.put(inEnd, (Integer) inEnd.val);
+
                 System.out.print(String.format("%3d  ", inStart.val));
                 map.remove(inStart);
                 while (inStart != inEnd) {
@@ -170,56 +199,9 @@ public class Node<T> {
                     }
                 }
                 System.out.println();
+
             }
         }
-        element.add(start);
-        if (null != start.right && !element.contains(start.right)) {
-            dfs(start.right, end, element, re, min, inStart, inEnd);
-        }
-        if (null != start.left && !element.contains(start.left)) {
-            dfs(start.left, end, element, re, min, inStart, inEnd);
-        }
-        if (null != start.up && !element.contains(start.up)) {
-            dfs(start.up, end, element, re, min, inStart, inEnd);
-        }
-        if (null != start.down && !element.contains(start.down)) {
-            dfs(start.down, end, element, re, min, inStart, inEnd);
-        }
-        element.remove(start);
-    }
-
-    public static void dfs(Node start, Node end, Set<Node> element) {
-        if (null == start || null == end) {
-            return;
-        }
-        if (start == end) {
-            min = Math.min(min, element.size());
-        }
-        element.add(start);
-        if (null != start.right && !element.contains(start.right)) {
-            dfs(start.right, end, new HashSet<>(element));
-        }
-        if (null != start.left && !element.contains(start.left)) {
-            dfs(start.left, end, new HashSet<>(element));
-        }
-        if (null != start.up && !element.contains(start.up)) {
-            dfs(start.up, end, new HashSet<>(element));
-        }
-        if (null != start.down && !element.contains(start.down)) {
-            dfs(start.down, end, new HashSet<>(element));
-        }
-        element.remove(start);
-    }
-
-
-    public static void main(String[] args) {
-        Node node = generate(5);
-//        print(node);
-        Node start = node.right.down;//7
-        Node end = node.right.right.right.down.down.down;//19
-
-
-        List<List<Node>> result = getMinPath(start, end);
 //        for (Set<Node> nodes : result) {
 //            for (Node cur : nodes) {
 //                System.out.print(String.format("%3d  ", cur.val));
